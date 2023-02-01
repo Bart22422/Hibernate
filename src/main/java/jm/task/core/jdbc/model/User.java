@@ -3,19 +3,19 @@ package jm.task.core.jdbc.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "usersTable")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "LASTNAME")
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "AGE")
+    @Column(name = "age")
     private Byte age;
 
     public User() {

@@ -13,13 +13,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private static final String SQL_TABLE = "CREATE TABLE USERS" +
-            "(`ID` INT NOT NULL AUTO_INCREMENT," +
-            "`NAME` VARCHAR (100) NOT NULL," +
-            "`LASTNAME` VARCHAR (150) NOT NULL," +
-            "`AGE` INT NOT NULL," +
-            "PRIMARY KEY (`ID`)" +
-            ")";
+    private static final String SQL_TABLE = "CREATE TABLE `instructor`.`usersTable` (`id` INT NOT NULL AUTO_INCREMENT,"+
+            "`name` VARCHAR(45) NOT NULL,"+
+            "`lastName` VARCHAR(45) NOT NULL,"+
+            "`age` INT NOT NULL,"+
+            "PRIMARY KEY (`id`))"+
+            "ENGINE = INNODB"+
+            "DEFAULT CHARACTER SET = utf8";
     private static final String dropTable = "DROP TABLE";
     private static final String cleanTAble = "DELETE FROM USERS\n"+
             "WHERE ID > 0";
