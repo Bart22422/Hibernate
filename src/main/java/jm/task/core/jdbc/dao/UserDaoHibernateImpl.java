@@ -13,7 +13,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private static final String SQL_TABLE = "CREATE TABLE `instructor`.`usersTable` (`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(45) NOT NULL,`lastName` VARCHAR(45) NOT NULL,`age` INT NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8";
+    private static final String SQL_TABLE = "CREATE TABLE IF NOT EXISTS `instructor`.`usersTable` " +
+            " (`id` INT NOT NULL AUTO_INCREMENT," +
+            "`name` VARCHAR(45) NOT NULL," +
+            "`lastName` VARCHAR(45) NOT NULL," +
+            "`age` INT NOT NULL," +
+            " PRIMARY KEY (`id`)) " +
+            "ENGINE = InnoDB " +
+            "DEFAULT CHARACTER SET = utf8";
     private static final String dropTable = "DROP TABLE";
     private static final String cleanTAble = "DELETE FROM USERS\n" +
             "WHERE ID > 0";
@@ -31,7 +38,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createNativeQuery(SQL_TABLE).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
+            if (null != transaction) {
                 transaction.rollback();
             }
             e.printStackTrace();
@@ -59,12 +66,13 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(new User(name, lastName, age));
+            session.merge(new User(name, lastName, age));
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
+                e.printStackTrace();
             }
         }
     }
